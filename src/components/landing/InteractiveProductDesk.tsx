@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
+import { toast } from "sonner";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 
@@ -86,7 +87,13 @@ export function InteractiveProductDesk() {
                   onMouseLeave={() => setActive((cur) => (cur === p.id ? null : cur))}
                   onFocus={() => !p.disabled && setActive(p.id)}
                   onBlur={() => setActive((cur) => (cur === p.id ? null : cur))}
-                  onClick={() => !p.disabled && setOpenId(p.id)}
+                  onClick={() => {
+                    if (p.disabled) {
+                      toast("곧 출시됩니다 🏷️", { id: "sticker-coming-soon" });
+                      return;
+                    }
+                    setOpenId(p.id);
+                  }}
                   aria-label={`${p.title} 자세히 보기`}
                   className={`group relative flex cursor-pointer flex-col overflow-hidden rounded-2xl border bg-card text-left transition-all duration-500 ease-out ${
                     p.disabled

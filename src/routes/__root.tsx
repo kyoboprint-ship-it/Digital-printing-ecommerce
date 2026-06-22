@@ -6,6 +6,7 @@ import {
   useRouter,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
+import { Toaster } from "sonner";
 
 import "../styles.css";
 
@@ -79,6 +80,18 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <Outlet />
+      <Toaster
+        position="bottom-center"
+        toastOptions={{
+          style: {
+            background: "var(--color-ink)",
+            color: "#fff",
+            borderRadius: "999px",
+            fontSize: "14px",
+            fontWeight: 600,
+          },
+        }}
+      />
     </QueryClientProvider>
   );
 }
