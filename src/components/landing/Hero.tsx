@@ -17,12 +17,12 @@ type Hotspot = {
 
 // PM-DEV-LANDING-HERO-01-HF: PM 확정 좌표 적용 완료 (2026-06-18)
 const HOTSPOTS: Hotspot[] = [
-  { id: "book",     label: "책자/제본", href: "#workspace", left: 16,   top: 26, width: 14.5, height: 34 },
-  { id: "leaflet",  label: "리플렛",   href: "#workspace", left: 60,   top: 24, width: 24,   height: 34 },
-  { id: "card",     label: "엽서/카드",href: "#workspace", left: 14.5, top: 62, width: 18,   height: 31 },
-  { id: "flyer",    label: "전단지",   href: "#workspace", left: 33,   top: 60, width: 24,   height: 34 },
-  { id: "sticker",  label: "스티커",   href: "#sticker",   left: 58,   top: 62, width: 21,   height: 30 },
-  { id: "namecard", label: "명함",     href: "#workspace", left: 77,   top: 62, width: 18,   height: 28 },
+  { id: "book",     label: "책자/제본", href: "#products", left: 16,   top: 26, width: 14.5, height: 34 },
+  { id: "leaflet",  label: "리플렛",   href: "#products", left: 60,   top: 24, width: 24,   height: 34 },
+  { id: "card",     label: "엽서/카드", href: "#products", left: 14.5, top: 62, width: 18,   height: 31 },
+  { id: "flyer",    label: "전단지",   href: "#products", left: 33,   top: 60, width: 24,   height: 34 },
+  { id: "sticker",  label: "스티커",   href: "#products", left: 58,   top: 62, width: 21,   height: 30 },
+  { id: "namecard", label: "명함",     href: "#products", left: 77,   top: 62, width: 18,   height: 28 },
 ];
 
 export function Hero() {
@@ -62,7 +62,7 @@ export function Hero() {
           </p>
           <div className="flex flex-col items-center gap-3 sm:flex-row animate-fade-up [animation-delay:240ms]">
             <a
-              href="#workspace"
+              href="#products"
               className="inline-flex items-center gap-2 rounded-full bg-[image:var(--gradient-brand)] py-3.5 pl-6 pr-5 text-base font-semibold text-canvas shadow-lift transition-transform hover:scale-[1.03] active:scale-[0.98]"
             >
               제작 시작하기

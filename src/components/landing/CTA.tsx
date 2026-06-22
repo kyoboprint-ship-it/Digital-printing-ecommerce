@@ -22,7 +22,7 @@ export function CTA() {
           </p>
           <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
             <a
-              href="#workflow"
+              href="#products"
               className="inline-flex items-center gap-2 rounded-full bg-canvas py-3.5 pl-6 pr-5 text-base font-bold text-ink shadow-lift transition-transform hover:scale-[1.03] active:scale-[0.98]"
             >
               제작 시작하기
