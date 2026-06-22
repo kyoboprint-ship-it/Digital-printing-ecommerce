@@ -1,3 +1,5 @@
+import { useInView } from "@/hooks/useInView";
+
 const STEPS = [
   { n: "01", title: "제품 선택", desc: "원하는 인쇄물 카테고리를 골라요" },
   { n: "02", title: "규격 선택", desc: "표준 규격 또는 맞춤 사이즈" },
@@ -7,8 +9,16 @@ const STEPS = [
 ];
 
 export function Workflow() {
+  const { ref, inView } = useInView();
+
   return (
-    <section id="workflow" className="bg-paper-muted px-6 py-24 md:py-32">
+    <section
+      ref={ref}
+      id="workflow"
+      className={`bg-paper-muted px-6 py-24 md:py-32 transition-all duration-700 ease-out ${
+        inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+      }`}
+    >
       <div className="mx-auto max-w-7xl">
         <header className="mb-14 text-center md:mb-20">
           <p className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--color-brand)]">

@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
+import { toast } from "sonner";
+import { useInView } from "@/hooks/useInView";
+
 const booklets      = "https://images.unsplash.com/photo-1526280524276-51b1c8a46321?w=800&h=800&fit=crop&q=85";
 const flyers        = "https://images.unsplash.com/photo-1549233566-fc68a19376e8?w=800&h=800&fit=crop&q=85";
 const brochures     = "https://images.unsplash.com/photo-1695634281181-b2357af34c61?w=800&h=800&fit=crop&q=85";
@@ -13,12 +16,12 @@ type Product = {
   title: string;
   tag: string;
   image: string;
-  disabled?: boolean; // 준비중 상품
+  disabled?: boolean;
 };
 
 const PRODUCTS: Product[] = [
   { id: "book",     emoji: "📖", title: "책자/제본", tag: "Book",          image: booklets },
-  { id: "flyer",    emoji: "🖼", title: "전단지",   tag: "Flyer",         image: flyers },
+  { id: "flyer",    emoji: "🖼",  title: "전단지",   tag: "Flyer",         image: flyers },
   { id: "leaflet",  emoji: "📄", title: "리플렛",   tag: "Leaflet",       image: brochures },
   { id: "card",     emoji: "📰", title: "엽서/카드", tag: "Postcard",     image: postcards },
   { id: "sticker",  emoji: "🏷️", title: "스티커",   tag: "Sticker",       image: stickers, disabled: true },
@@ -28,9 +31,16 @@ const PRODUCTS: Product[] = [
 export function Products() {
   const [selected, setSelected] = useState("book");
   const navigate = useNavigate();
+  const { ref, inView } = useInView();
 
   return (
-    <section id="products" className="py-24 md:py-32">
+    <section
+      ref={ref}
+      id="products"
+      className={`py-24 md:py-32 transition-all duration-700 ease-out ${
+        inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+      }`}
+    >
       <div className="mx-auto max-w-7xl px-6">
         <header className="mb-12 flex flex-col gap-4 md:mb-16 md:flex-row md:items-end md:justify-between">
           <div className="max-w-xl">
@@ -55,26 +65,21 @@ export function Products() {
                 <button
                   key={p.id}
                   type="button"
-                  disabled={p.disabled}
                   onClick={() => {
-                    if (p.disabled) return;
-                    if (p.id === "namecard") {
-                      navigate({ to: "/order/namecard" });
-                    } else if (p.id === "flyer") {
-                      navigate({ to: "/order/flyer" });
-                    } else if (p.id === "card") {
-                      navigate({ to: "/order/postcard" });
-                    } else if (p.id === "leaflet") {
-                      navigate({ to: "/order/leaflet" });
-                    } else if (p.id === "book") {
-                      navigate({ to: "/order/booklet" });
-                    } else {
-                      setSelected(p.id);
+                    if (p.disabled) {
+                      toast("곧 출시됩니다 🏷️", { id: "sticker-coming-soon" });
+                      return;
                     }
+                    if (p.id === "namecard") navigate({ to: "/order/namecard" });
+                    else if (p.id === "flyer")   navigate({ to: "/order/flyer" });
+                    else if (p.id === "card")    navigate({ to: "/order/postcard" });
+                    else if (p.id === "leaflet") navigate({ to: "/order/leaflet" });
+                    else if (p.id === "book")    navigate({ to: "/order/booklet" });
+                    else setSelected(p.id);
                   }}
                   className={`group relative flex w-[170px] shrink-0 snap-start flex-col overflow-hidden rounded-2xl border bg-card text-left transition-all duration-300 md:w-auto ${
                     p.disabled
-                      ? "cursor-not-allowed opacity-80 border-border shadow-soft"
+                      ? "cursor-pointer opacity-80 border-border shadow-soft"
                       : isActive
                         ? "border-transparent shadow-lift ring-2 ring-[color:var(--color-brand)]"
                         : "border-border shadow-soft hover:-translate-y-1 hover:shadow-lift"

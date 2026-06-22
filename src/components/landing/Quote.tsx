@@ -1,3 +1,5 @@
+import { useInView } from "@/hooks/useInView";
+
 const ROWS = [
   { label: "제품", value: "책제작", chip: "Book" },
   { label: "규격", value: "A4 (210 × 297mm)" },
@@ -8,8 +10,16 @@ const ROWS = [
 ];
 
 export function Quote() {
+  const { ref, inView } = useInView();
+
   return (
-    <section id="quote" className="px-6 py-24 md:py-32">
+    <section
+      ref={ref}
+      id="quote"
+      className={`px-6 py-24 md:py-32 transition-all duration-700 ease-out ${
+        inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+      }`}
+    >
       <div className="mx-auto max-w-7xl">
         <div className="grid items-center gap-12 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
           <div>

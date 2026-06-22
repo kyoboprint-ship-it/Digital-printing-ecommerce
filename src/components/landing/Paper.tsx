@@ -1,3 +1,5 @@
+import { useInView } from "@/hooks/useInView";
+
 const paperImg = "https://images.unsplash.com/photo-1601662528567-526cd06f6582?w=1000&h=1200&fit=crop&q=85";
 
 const STOCKS = [
@@ -8,8 +10,16 @@ const STOCKS = [
 ];
 
 export function Paper() {
+  const { ref, inView } = useInView();
+
   return (
-    <section id="paper" className="overflow-hidden px-6 py-24 md:py-32">
+    <section
+      ref={ref}
+      id="paper"
+      className={`overflow-hidden px-6 py-24 md:py-32 transition-all duration-700 ease-out ${
+        inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+      }`}
+    >
       <div className="mx-auto max-w-7xl">
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
           <div className="relative order-2 lg:order-1">

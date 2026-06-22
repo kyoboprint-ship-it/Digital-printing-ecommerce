@@ -1,3 +1,5 @@
+import { useInView } from "@/hooks/useInView";
+
 // Unsplash 임시 이미지 (실제 촬영본으로 교체 예정)
 const IMG = {
   booklet:  "https://images.unsplash.com/photo-1526280524276-51b1c8a46321?w=900&h=1100&fit=crop&q=85",
@@ -24,8 +26,16 @@ const WORKS: Work[] = [
 ];
 
 export function PortfolioGallery() {
+  const { ref, inView } = useInView();
+
   return (
-    <section id="portfolio" className="px-6 py-24 md:py-32">
+    <section
+      ref={ref}
+      id="portfolio"
+      className={`px-6 py-24 md:py-32 transition-all duration-700 ease-out ${
+        inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+      }`}
+    >
       <div className="mx-auto max-w-7xl">
         <header className="mb-12 flex flex-col gap-4 md:mb-16 md:flex-row md:items-end md:justify-between">
           <div className="max-w-xl">
