@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { useInView } from "@/hooks/useInView";
@@ -16,22 +16,42 @@ type Product = {
   title: string;
   tag: string;
   image: string;
+  accent: string;
   disabled?: boolean;
 };
 
 const PRODUCTS: Product[] = [
-  { id: "book",     emoji: "📖", title: "책자/제본", tag: "Book",          image: booklets },
-  { id: "flyer",    emoji: "🖼",  title: "전단지",   tag: "Flyer",         image: flyers },
-  { id: "leaflet",  emoji: "📄", title: "리플렛",   tag: "Leaflet",       image: brochures },
-  { id: "card",     emoji: "📰", title: "엽서/카드", tag: "Postcard",     image: postcards },
-  { id: "sticker",  emoji: "🏷️", title: "스티커",   tag: "Sticker",       image: stickers, disabled: true },
-  { id: "namecard", emoji: "💳", title: "명함",     tag: "Business Card", image: businesscards },
+  { id: "book",     emoji: "📖", title: "책자/제본", tag: "Book",          image: booklets,      accent: "oklch(0.62 0.21 285)" },
+  { id: "flyer",    emoji: "🖼",  title: "전단지",   tag: "Flyer",         image: flyers,        accent: "oklch(0.65 0.18 200)" },
+  { id: "leaflet",  emoji: "📄", title: "리플렛",   tag: "Leaflet",       image: brochures,     accent: "oklch(0.65 0.17 145)" },
+  { id: "card",     emoji: "📰", title: "엽서/카드", tag: "Postcard",     image: postcards,     accent: "oklch(0.65 0.20 15)"  },
+  { id: "sticker",  emoji: "🏷️", title: "스티커",   tag: "Sticker",       image: stickers,      accent: "oklch(0.75 0.18 85)",  disabled: true },
+  { id: "namecard", emoji: "💳", title: "명함",     tag: "Business Card", image: businesscards, accent: "oklch(0.55 0.10 265)" },
 ];
 
 export function Products() {
   const [selected, setSelected] = useState("book");
   const navigate = useNavigate();
   const { ref, inView } = useInView();
+  const cardRefs = useRef<(HTMLButtonElement | null)[]>([]);
+
+  function handleTiltMove(e: React.MouseEvent<HTMLButtonElement>, idx: number) {
+    const el = cardRefs.current[idx];
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const cx = rect.width / 2;
+    const cy = rect.height / 2;
+    const rotX = ((y - cy) / cy) * -7;
+    const rotY = ((x - cx) / cx) * 7;
+    el.style.transform = `perspective(600px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateY(-6px)`;
+  }
+
+  function handleTiltReset(idx: number) {
+    const el = cardRefs.current[idx];
+    if (el) el.style.transform = "";
+  }
 
   return (
     <section
@@ -56,14 +76,14 @@ export function Products() {
           </p>
         </header>
 
-        {/* Single horizontal row, scrollable on mobile */}
         <div className="-mx-6 px-6">
-          <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4 [scrollbar-width:none] md:grid md:grid-cols-6 md:gap-5 md:overflow-visible">
-            {PRODUCTS.map((p) => {
+          <div className="flex snap-x snap-mandatory gap-5 overflow-x-auto pb-4 [scrollbar-width:none] md:grid md:grid-cols-6 md:gap-8 md:overflow-visible">
+            {PRODUCTS.map((p, i) => {
               const isActive = selected === p.id;
               return (
                 <button
                   key={p.id}
+                  ref={(el) => { cardRefs.current[i] = el; }}
                   type="button"
                   onClick={() => {
                     if (p.disabled) {
@@ -77,14 +97,29 @@ export function Products() {
                     else if (p.id === "book")    navigate({ to: "/order/booklet" });
                     else setSelected(p.id);
                   }}
-                  className={`group relative flex w-[170px] shrink-0 snap-start flex-col overflow-hidden rounded-2xl border bg-card text-left transition-all duration-300 md:w-auto ${
+                  onMouseMove={(e) => !p.disabled && handleTiltMove(e, i)}
+                  onMouseLeave={() => handleTiltReset(i)}
+                  style={{ transition: "transform 0.15s ease, box-shadow 0.3s ease" }}
+                  className={`group relative flex w-[156px] shrink-0 snap-start flex-col overflow-hidden rounded-2xl border bg-card text-left md:w-auto ${
                     p.disabled
                       ? "cursor-pointer opacity-80 border-border shadow-soft"
                       : isActive
-                        ? "border-transparent shadow-lift ring-2 ring-[color:var(--color-brand)]"
-                        : "border-border shadow-soft hover:-translate-y-1 hover:shadow-lift"
+                        ? "border-transparent shadow-lift ring-2"
+                        : "border-border shadow-soft hover:shadow-xl"
                   }`}
                 >
+                  {/* 색 악센트 — 활성/hover 글로우 */}
+                  {!p.disabled && (
+                    <span
+                      aria-hidden
+                      className={`pointer-events-none absolute inset-0 rounded-2xl transition-opacity duration-300 ${
+                        isActive ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+                      }`}
+                      style={{ boxShadow: `0 0 0 2px ${p.accent}, 0 8px 32px ${p.accent}40` }}
+                    />
+                  )}
+
+                  {/* 이미지 */}
                   <div className="relative aspect-square w-full overflow-hidden bg-[image:var(--gradient-soft)]">
                     <img
                       src={p.image}
@@ -106,11 +141,24 @@ export function Products() {
                       </>
                     )}
                     {isActive && !p.disabled && (
-                      <span className="absolute right-2 top-2 grid size-6 place-items-center rounded-full bg-[image:var(--gradient-brand)] text-[10px] font-bold text-canvas shadow-soft">
+                      <span
+                        className="absolute right-2 top-2 grid size-6 place-items-center rounded-full text-[10px] font-bold text-canvas shadow-soft"
+                        style={{ background: p.accent }}
+                      >
                         ✓
                       </span>
                     )}
+                    {/* CTA 슬라이드업 — 호버 시 노출, 모바일 항상 노출 */}
+                    {!p.disabled && (
+                      <div className="absolute inset-x-0 bottom-0 flex items-end px-3 pb-3 pt-8 bg-gradient-to-t from-ink/70 to-transparent translate-y-2 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 [.touch-device_&]:translate-y-0 [.touch-device_&]:opacity-100 max-[767px]:translate-y-0 max-[767px]:opacity-100">
+                        <span className="text-[11px] font-bold text-canvas tracking-wide">
+                          주문하기 →
+                        </span>
+                      </div>
+                    )}
                   </div>
+
+                  {/* 카드 하단 텍스트 */}
                   <div className="flex items-center justify-between gap-2 px-4 py-3">
                     <div className="min-w-0">
                       <p className="truncate text-sm font-semibold">
