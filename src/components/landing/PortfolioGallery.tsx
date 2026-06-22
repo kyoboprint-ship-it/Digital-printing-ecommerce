@@ -1,8 +1,11 @@
-import catalog from "@/assets/portfolio-catalog.jpg";
-import magazine from "@/assets/portfolio-magazine.jpg";
-import booklet from "@/assets/portfolio-booklet.jpg";
-import brochure from "@/assets/portfolio-brochure.jpg";
-import marketing from "@/assets/portfolio-marketing.jpg";
+// Unsplash 임시 이미지 (실제 촬영본으로 교체 예정)
+const IMG = {
+  booklet:  "https://images.unsplash.com/photo-1526280524276-51b1c8a46321?w=900&h=1100&fit=crop",
+  namecard: "https://images.unsplash.com/photo-1718670013921-2f144aba173a?w=900&h=1100&fit=crop",
+  leaflet:  "https://images.unsplash.com/photo-1695634281181-b2357af34c61?w=900&h=1100&fit=crop",
+  flyer:    "https://images.unsplash.com/photo-1549233566-fc68a19376e8?w=900&h=1100&fit=crop",
+  card:     "https://images.unsplash.com/photo-1566125618135-8063e23d8e4e?w=900&h=1100&fit=crop",
+};
 
 type Work = {
   title: string;
@@ -13,11 +16,11 @@ type Work = {
 };
 
 const WORKS: Work[] = [
-  { title: "Corporate Catalog", tag: "카탈로그", client: "Studio Norm", image: catalog, span: "md:col-span-2 md:row-span-2" },
-  { title: "Editorial Magazine", tag: "매거진", client: "Issue 04", image: magazine },
-  { title: "Foil Booklet", tag: "책제작", client: "Atelier Mire", image: booklet },
-  { title: "Tri-fold Brochure", tag: "브로슈어", client: "Form & Co.", image: brochure, span: "md:col-span-2" },
-  { title: "Brand Collateral", tag: "브랜딩", client: "Northline", image: marketing },
+  { title: "Premium Booklet",  tag: "책자/제본", client: "Atelier Mire", image: IMG.booklet,  span: "md:col-span-2 md:row-span-2" },
+  { title: "Luxury Name Card", tag: "명함",      client: "Studio Norm",  image: IMG.namecard },
+  { title: "Tri-fold Leaflet", tag: "리플렛",    client: "Form & Co.",   image: IMG.leaflet },
+  { title: "A4 Flyer Series",  tag: "전단지",    client: "Northline",    image: IMG.flyer,    span: "md:col-span-2" },
+  { title: "Postcard Set",     tag: "엽서/카드", client: "Issue 04",     image: IMG.card },
 ];
 
 export function PortfolioGallery() {
@@ -35,7 +38,7 @@ export function PortfolioGallery() {
             </h2>
           </div>
           <p className="max-w-sm text-muted-foreground">
-            브랜드, 매거진, 출판물까지. 다양한 산업의 디자이너들이 Printly로 결과물을 완성합니다.
+            브랜드, 출판물, 마케팅까지. 다양한 산업의 디자이너들이 Printly로 결과물을 완성합니다.
           </p>
         </header>
 
@@ -43,9 +46,7 @@ export function PortfolioGallery() {
           {WORKS.map((w) => (
             <figure
               key={w.title}
-              className={`group relative overflow-hidden rounded-2xl border border-border bg-card shadow-soft transition-all duration-500 hover:-translate-y-1 hover:shadow-lift ${
-                w.span ?? ""
-              }`}
+              className={`group relative overflow-hidden rounded-2xl border border-border bg-card shadow-soft transition-all duration-500 hover:-translate-y-1 hover:shadow-lift ${w.span ?? ""}`}
             >
               <div className="relative aspect-[4/5] w-full overflow-hidden bg-paper-muted">
                 <img

@@ -5,8 +5,8 @@ import brochures from "@/assets/product-brochures.jpg";
 import flyers from "@/assets/product-flyers.jpg";
 import postcards from "@/assets/product-postcards.jpg";
 import businesscards from "@/assets/product-businesscards.jpg";
-// TODO: product-stickers.jpg 이미지 추가 후 아래 import 교체
-import stickers from "@/assets/product-catalogs.jpg"; // 임시 placeholder
+// TODO: 실제 촬영본 준비 시 로컬 파일로 교체
+const stickers = "https://images.unsplash.com/photo-1591241880902-7f05d345516e?w=800&h=800&fit=crop";
 
 type Product = {
   id: string;
