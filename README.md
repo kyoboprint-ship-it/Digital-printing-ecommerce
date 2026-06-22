@@ -25,6 +25,7 @@ npm run dev
 ```
 src/
 ├── routes/
+│   ├── __root.tsx             # 루트 레이아웃 (Toaster 마운트됨)
 │   ├── index.tsx              # 랜딩 페이지 (/)
 │   ├── order.booklet.tsx      # 책자/제본 주문
 │   ├── order.flyer.tsx        # 전단지 주문
@@ -33,20 +34,34 @@ src/
 │   └── order.namecard.tsx     # 명함 주문
 │
 ├── components/
-│   └── landing/               # 랜딩 페이지 섹션 컴포넌트 (12개)
-│       ├── Nav.tsx
+│   └── landing/               # 랜딩 페이지 섹션 컴포넌트
+│       ├── Nav.tsx            # 상단 네비게이션 + 모바일 햄버거 메뉴
 │       ├── Hero.tsx           # 히어로 + 핫스팟 6종
-│       ├── Products.tsx       # 제품 카드 6종
-│       ├── Workflow.tsx
-│       ├── Paper.tsx
-│       ├── Quote.tsx
+│       ├── Products.tsx       # 제품 선택기 (6종 카드, 단독 진입점)
+│       ├── Workflow.tsx       # 5단계 제작 과정
+│       ├── Paper.tsx          # 용지 소개
+│       ├── Quote.tsx          # 실시간 견적 데모
 │       ├── PortfolioGallery.tsx
 │       ├── CTA.tsx
 │       └── Footer.tsx
 │
-├── assets/                    # 이미지 에셋
+├── hooks/
+│   └── useInView.ts           # IntersectionObserver 스크롤 애니메이션 훅
+│
+├── assets/                    # 이미지 에셋 (→ Unsplash 임시 URL 사용 중)
 └── styles.css                 # 디자인 토큰 (oklch 색상 시스템)
 ```
+
+---
+
+## 랜딩 섹션 순서 (확정)
+
+```
+Nav → Hero → #products → #workflow → #paper → #quote → #portfolio → #cta → Footer
+```
+
+> `#workspace`(InteractiveProductDesk)는 PM-DEV-LANDING-UX-02 B안 확정으로 제거됨.  
+> 모든 상품 진입은 `#products`(Products.tsx) 단독 처리.
 
 ---
 
@@ -72,28 +87,22 @@ src/
 | `flyer` | 전단지 | `/order/flyer` | ✅ |
 | `leaflet` | 리플렛 | `/order/leaflet` | ✅ |
 | `card` | 엽서/카드 | `/order/postcard` | ✅ |
-| `sticker` | 스티커 | 미구현 | ⏳ 준비중 |
+| `sticker` | 스티커 | 미구현 | ⏳ 준비중 (토스트만) |
 | `namecard` | 명함 | `/order/namecard` | ✅ |
 
 ---
 
-## 이미지 교체 대상
+## 이미지 현황
 
-`src/assets/` 안의 아래 파일들을 교체하면 됩니다:
+현재 모든 이미지는 **Unsplash 임시 URL**을 사용합니다 (실사 촬영 전 단계).  
+교체 시 각 컴포넌트 상단 URL 상수만 바꾸면 됩니다.
 
-| 파일명 | 위치 | 비고 |
+| 컴포넌트 | 상수명 | 교체 대상 |
 |---|---|---|
-| `hero-desk.jpg` | 히어로 섹션 | 6종 인쇄물 배치 이미지 |
-| `product-booklets.jpg` | 제품 카드 | 1:1 비율 |
-| `product-flyers.jpg` | 제품 카드 | 1:1 비율 |
-| `product-brochures.jpg` | 제품 카드 | 1:1 비율 (리플렛) |
-| `product-postcards.jpg` | 제품 카드 | 1:1 비율 |
-| `product-stickers.jpg` | 제품 카드 | **신규 추가 필요** |
-| `product-businesscards.jpg` | 제품 카드 | 1:1 비율 |
-| `paper-texture.jpg` | 용지 섹션 | 4:5 비율 |
-| `portfolio-*.jpg` | 포트폴리오 | 4:5 비율, 5종 |
-
-> `product-stickers.jpg`는 아직 없습니다. 추가 후 `Products.tsx` 상단 import를 교체하세요.
+| `Hero.tsx` | `heroImg` | 인쇄물 배치 이미지 |
+| `Products.tsx` | `booklets`, `flyers` 등 | 각 제품 1:1 이미지 |
+| `Paper.tsx` | `paperImg` | 용지 질감 클로즈업 |
+| `PortfolioGallery.tsx` | `IMG.*` | 포트폴리오 작업물 5종 |
 
 ---
 
@@ -108,6 +117,6 @@ npm run format   # Prettier 포맷
 
 ---
 
-## 디자인 지시서
+## 상세 개발 현황
 
-Figma 작업을 위한 상세 디자인 지시서(`Printly_랜딩페이지_Figma_디자인_지시서_v2.docx`)를 참고하세요.
+→ **`DEVLOG.md`** 참조
