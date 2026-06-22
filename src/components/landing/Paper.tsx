@@ -1,6 +1,6 @@
 import { useInView } from "@/hooks/useInView";
 
-const paperImg = "https://images.unsplash.com/photo-1601662528567-526cd06f6582?w=1000&h=1200&fit=crop&q=85";
+const paperImg = "https://images.unsplash.com/photo-1616410731303-6affae095a0a?w=1000&h=1200&fit=crop&q=85";
 
 const STOCKS = [
   { name: "매트지", desc: "은은한 무광 표면, 차분한 색감 표현에 탁월", swatch: "oklch(0.95 0.01 80)" },

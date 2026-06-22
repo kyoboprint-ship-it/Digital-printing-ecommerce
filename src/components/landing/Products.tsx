@@ -3,12 +3,12 @@ import { toast } from "sonner";
 import { useInView } from "@/hooks/useInView";
 
 const IMAGES = {
-  book:     "https://images.unsplash.com/photo-1526280524276-51b1c8a46321?w=800&h=1000&fit=crop&q=85",
-  flyer:    "https://images.unsplash.com/photo-1549233566-fc68a19376e8?w=800&h=1000&fit=crop&q=85",
-  leaflet:  "https://images.unsplash.com/photo-1695634281181-b2357af34c61?w=800&h=1000&fit=crop&q=85",
-  card:     "https://images.unsplash.com/photo-1577201872486-e25a44ae7c77?w=800&h=1000&fit=crop&q=85",
-  sticker:  "https://images.unsplash.com/photo-1621252756235-7f37e5e5125e?w=800&h=1000&fit=crop&q=85",
-  namecard: "https://images.unsplash.com/photo-1718670013921-2f144aba173a?w=800&h=1000&fit=crop&q=85",
+  book:     "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=800&h=1000&fit=crop&q=85",
+  flyer:    "https://images.unsplash.com/photo-1457369804613-52c61a468e7d?w=800&h=1000&fit=crop&q=85",
+  leaflet:  "https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=800&h=1000&fit=crop&q=85",
+  card:     "https://images.unsplash.com/photo-1578301978162-7aae4d755744?w=800&h=1000&fit=crop&q=85",
+  sticker:  "https://images.unsplash.com/photo-1625768376503-68d2495d78c5?w=800&h=1000&fit=crop&q=85",
+  namecard: "https://images.unsplash.com/photo-1599590984817-0c15f31b1fa5?w=800&h=1000&fit=crop&q=85",
 };
 
 type Product = {

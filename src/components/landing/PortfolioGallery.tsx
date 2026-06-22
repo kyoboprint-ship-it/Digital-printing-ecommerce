@@ -2,10 +2,10 @@ import { useInView } from "@/hooks/useInView";
 
 // Unsplash 임시 이미지 (실제 촬영본으로 교체 예정)
 const IMG = {
-  booklet:  "https://images.unsplash.com/photo-1526280524276-51b1c8a46321?w=900&h=1100&fit=crop&q=85",
-  namecard: "https://images.unsplash.com/photo-1718670013921-2f144aba173a?w=900&h=1100&fit=crop&q=85",
-  leaflet:  "https://images.unsplash.com/photo-1695634281181-b2357af34c61?w=900&h=1100&fit=crop&q=85",
-  flyer:    "https://images.unsplash.com/photo-1549233566-fc68a19376e8?w=900&h=1100&fit=crop&q=85",
+  booklet:  "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=900&h=1100&fit=crop&q=85",
+  namecard: "https://images.unsplash.com/photo-1718670013988-c6e3edb92345?w=900&h=1100&fit=crop&q=85",
+  leaflet:  "https://images.unsplash.com/photo-1695634365196-55e0eb4e4dee?w=900&h=1100&fit=crop&q=85",
+  flyer:    "https://images.unsplash.com/photo-1553729459-efe14ef6055d?w=900&h=1100&fit=crop&q=85",
   card:     "https://images.unsplash.com/photo-1577201867491-47644a49dcab?w=900&h=1100&fit=crop&q=85",
 };
 
