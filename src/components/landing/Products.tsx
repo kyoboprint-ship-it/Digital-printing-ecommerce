@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
-import booklets from "@/assets/product-booklets.jpg";
-import brochures from "@/assets/product-brochures.jpg";
-import flyers from "@/assets/product-flyers.jpg";
-import postcards from "@/assets/product-postcards.jpg";
-import businesscards from "@/assets/product-businesscards.jpg";
-// TODO: 실제 촬영본 준비 시 로컬 파일로 교체
-const stickers = "https://images.unsplash.com/photo-1591241880902-7f05d345516e?w=800&h=800&fit=crop";
+const booklets      = "https://images.unsplash.com/photo-1526280524276-51b1c8a46321?w=800&h=800&fit=crop&q=85";
+const flyers        = "https://images.unsplash.com/photo-1549233566-fc68a19376e8?w=800&h=800&fit=crop&q=85";
+const brochures     = "https://images.unsplash.com/photo-1695634281181-b2357af34c61?w=800&h=800&fit=crop&q=85";
+const postcards     = "https://images.unsplash.com/photo-1577201872486-e25a44ae7c77?w=800&h=800&fit=crop&q=85";
+const stickers      = "https://images.unsplash.com/photo-1621252756235-7f37e5e5125e?w=800&h=800&fit=crop&q=85";
+const businesscards = "https://images.unsplash.com/photo-1718670013921-2f144aba173a?w=800&h=800&fit=crop&q=85";
 
 type Product = {
   id: string;

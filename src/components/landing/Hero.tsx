@@ -1,4 +1,4 @@
-import heroImg from "@/assets/hero-desk.jpg";
+const heroImg = "https://images.unsplash.com/photo-1513077202514-c511b41bd4c7?w=1920&h=1080&fit=crop&q=85";
 
 // ── 핫스팟 정의 ────────────────────────────────────────────────────────────
 // left/top/width/height 모두 이미지 컨테이너 대비 % → 반응형 유지 (절대 픽셀 사용 금지)

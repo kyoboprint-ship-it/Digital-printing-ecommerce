@@ -1,10 +1,10 @@
 // Unsplash 임시 이미지 (실제 촬영본으로 교체 예정)
 const IMG = {
-  booklet:  "https://images.unsplash.com/photo-1526280524276-51b1c8a46321?w=900&h=1100&fit=crop",
-  namecard: "https://images.unsplash.com/photo-1718670013921-2f144aba173a?w=900&h=1100&fit=crop",
-  leaflet:  "https://images.unsplash.com/photo-1695634281181-b2357af34c61?w=900&h=1100&fit=crop",
-  flyer:    "https://images.unsplash.com/photo-1549233566-fc68a19376e8?w=900&h=1100&fit=crop",
-  card:     "https://images.unsplash.com/photo-1566125618135-8063e23d8e4e?w=900&h=1100&fit=crop",
+  booklet:  "https://images.unsplash.com/photo-1526280524276-51b1c8a46321?w=900&h=1100&fit=crop&q=85",
+  namecard: "https://images.unsplash.com/photo-1718670013921-2f144aba173a?w=900&h=1100&fit=crop&q=85",
+  leaflet:  "https://images.unsplash.com/photo-1695634281181-b2357af34c61?w=900&h=1100&fit=crop&q=85",
+  flyer:    "https://images.unsplash.com/photo-1549233566-fc68a19376e8?w=900&h=1100&fit=crop&q=85",
+  card:     "https://images.unsplash.com/photo-1577201867491-47644a49dcab?w=900&h=1100&fit=crop&q=85",
 };
 
 type Work = {
