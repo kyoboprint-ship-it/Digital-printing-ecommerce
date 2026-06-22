@@ -2,12 +2,15 @@ import { useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import booklets from "@/assets/product-booklets.jpg";
-import catalogs from "@/assets/product-catalogs.jpg";
-import brochures from "@/assets/product-brochures.jpg";
-import flyers from "@/assets/product-flyers.jpg";
-import postcards from "@/assets/product-postcards.jpg";
-import businesscards from "@/assets/product-businesscards.jpg";
+
+const IMG = {
+  booklets:      "https://images.unsplash.com/photo-1526280524276-51b1c8a46321?w=800&h=800&fit=crop&q=85",
+  flyers:        "https://images.unsplash.com/photo-1549233566-fc68a19376e8?w=800&h=800&fit=crop&q=85",
+  brochures:     "https://images.unsplash.com/photo-1695634281181-b2357af34c61?w=800&h=800&fit=crop&q=85",
+  postcards:     "https://images.unsplash.com/photo-1577201872486-e25a44ae7c77?w=800&h=800&fit=crop&q=85",
+  stickers:      "https://images.unsplash.com/photo-1621252756235-7f37e5e5125e?w=800&h=800&fit=crop&q=85",
+  businesscards: "https://images.unsplash.com/photo-1718670013921-2f144aba173a?w=800&h=800&fit=crop&q=85",
+};
 
 type DeskProduct = {
   id: string;
@@ -20,15 +23,17 @@ type DeskProduct = {
   sizes: string[];
   papers: string[];
   lead: string;
+  route?: string;
+  disabled?: boolean;
 };
 
 const PRODUCTS: DeskProduct[] = [
-  { id: "book",     emoji: "📖", title: "책제작",   subtitle: "Book",          description: "교재, 회사소개서, 출판물 제작",   cta: "책 제작 시작",   image: booklets,      sizes: ["A4", "B5", "A5", "Custom"],        papers: ["미색모조 80g", "아트지 150g", "랑데뷰 130g"],        lead: "영업일 3일" },
-  { id: "catalog",  emoji: "📘", title: "카탈로그", subtitle: "Catalog",       description: "제품·브랜드 카탈로그 제작",      cta: "카탈로그 시작",  image: catalogs,      sizes: ["A4", "정사각형 220", "Custom"],      papers: ["스노우지 200g", "랑데뷰 210g"],                      lead: "영업일 3일" },
-  { id: "leaflet",  emoji: "📄", title: "리플렛",   subtitle: "Leaflet",       description: "접지형 안내물, 행사 안내서",     cta: "리플렛 시작",    image: brochures,     sizes: ["A4 3단", "A3 2단", "Custom"],       papers: ["스노우지 150g", "아트지 200g"],                      lead: "영업일 2일" },
-  { id: "card",     emoji: "📰", title: "카드/엽서", subtitle: "Postcard",     description: "초대장, 청첩장, 굿즈 엽서",     cta: "카드 제작 시작", image: postcards,     sizes: ["100×148", "105×210", "Custom"],     papers: ["랑데뷰 240g", "반누보 250g"],                        lead: "영업일 2일" },
-  { id: "flyer",    emoji: "🖼", title: "전단지",   subtitle: "Flyer",         description: "프로모션·매장 홍보용 전단",     cta: "전단지 시작",    image: flyers,        sizes: ["A4", "A5", "B5"],                  papers: ["아트지 100g", "스노우지 120g"],                      lead: "영업일 1일" },
-  { id: "namecard", emoji: "💳", title: "명함",     subtitle: "Business Card", description: "프리미엄 비즈니스 명함",         cta: "명함 제작 시작", image: businesscards, sizes: ["90×50", "85×55", "Custom"],        papers: ["랑데뷰 240g", "반누보 250g", "크라프트 220g"],       lead: "영업일 1일" },
+  { id: "book",     emoji: "📖", title: "책자/제본", subtitle: "Book",          description: "교재, 회사소개서, 출판물 제작",  cta: "책자 제작 시작",  image: IMG.booklets,      route: "/order/booklet",  sizes: ["A4", "B5", "A5", "Custom"],       papers: ["미색모조 80g", "아트지 150g", "랑데뷰 130g"],      lead: "영업일 3일" },
+  { id: "flyer",    emoji: "🖼",  title: "전단지",   subtitle: "Flyer",          description: "프로모션·매장 홍보용 전단",    cta: "전단지 시작",     image: IMG.flyers,        route: "/order/flyer",    sizes: ["A4", "A5", "B5"],                 papers: ["아트지 100g", "스노우지 120g"],                    lead: "영업일 1일" },
+  { id: "leaflet",  emoji: "📄", title: "리플렛",   subtitle: "Leaflet",        description: "접지형 안내물, 행사 안내서",   cta: "리플렛 시작",     image: IMG.brochures,     route: "/order/leaflet",  sizes: ["A4 3단", "A3 2단", "Custom"],     papers: ["스노우지 150g", "아트지 200g"],                    lead: "영업일 2일" },
+  { id: "card",     emoji: "📮", title: "엽서/카드", subtitle: "Postcard",       description: "초대장, 청첩장, 굿즈 엽서",   cta: "카드 제작 시작",  image: IMG.postcards,     route: "/order/postcard", sizes: ["100×148", "105×210", "Custom"],   papers: ["랑데뷰 240g", "반누보 250g"],                      lead: "영업일 2일" },
+  { id: "sticker",  emoji: "🏷️", title: "스티커",   subtitle: "Sticker",        description: "롤스티커, 낱장스티커, 투명",   cta: "준비 중",         image: IMG.stickers,      disabled: true,           sizes: ["Custom"],                         papers: ["아트지", "투명 PVC", "크라프트"],                  lead: "준비 중" },
+  { id: "namecard", emoji: "💳", title: "명함",     subtitle: "Business Card",  description: "프리미엄 비즈니스 명함",       cta: "명함 제작 시작",  image: IMG.businesscards, route: "/order/namecard", sizes: ["90×50", "85×55", "Custom"],       papers: ["랑데뷰 240g", "반누보 250g", "크라프트 220g"],     lead: "영업일 1일" },
 ];
 
 export function InteractiveProductDesk() {
@@ -65,8 +70,7 @@ export function InteractiveProductDesk() {
             aria-hidden
             className="pointer-events-none absolute inset-0 opacity-[0.04]"
             style={{
-              backgroundImage:
-                "radial-gradient(oklch(0 0 0 / 1) 1px, transparent 1px)",
+              backgroundImage: "radial-gradient(oklch(0 0 0 / 1) 1px, transparent 1px)",
               backgroundSize: "22px 22px",
             }}
           />
@@ -78,14 +82,16 @@ export function InteractiveProductDesk() {
                 <button
                   key={p.id}
                   type="button"
-                  onMouseEnter={() => setActive(p.id)}
+                  onMouseEnter={() => !p.disabled && setActive(p.id)}
                   onMouseLeave={() => setActive((cur) => (cur === p.id ? null : cur))}
-                  onFocus={() => setActive(p.id)}
+                  onFocus={() => !p.disabled && setActive(p.id)}
                   onBlur={() => setActive((cur) => (cur === p.id ? null : cur))}
-                  onClick={() => setOpenId(p.id)}
+                  onClick={() => !p.disabled && setOpenId(p.id)}
                   aria-label={`${p.title} 자세히 보기`}
                   className={`group relative flex cursor-pointer flex-col overflow-hidden rounded-2xl border bg-card text-left transition-all duration-500 ease-out ${
-                    isActive
+                    p.disabled
+                      ? "cursor-default opacity-60"
+                      : isActive
                       ? "-translate-y-2 border-transparent shadow-lift ring-2 ring-[color:var(--color-brand)]"
                       : "border-border shadow-soft hover:-translate-y-2 hover:shadow-lift"
                   } ${i % 2 === 0 ? "md:translate-y-2" : ""}`}
@@ -102,6 +108,11 @@ export function InteractiveProductDesk() {
                     <span className="absolute left-3 top-3 grid size-8 place-items-center rounded-full bg-canvas/90 text-base shadow-soft backdrop-blur">
                       {p.emoji}
                     </span>
+                    {p.disabled && (
+                      <span className="absolute right-3 top-3 rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-bold text-amber-700">
+                        준비중
+                      </span>
+                    )}
                   </div>
 
                   <div className="flex flex-col gap-1 px-5 pb-5 pt-4">
@@ -114,17 +125,18 @@ export function InteractiveProductDesk() {
                     <p className="text-xs leading-relaxed text-muted-foreground">{p.description}</p>
                   </div>
 
-                  {/* Hover popup */}
-                  <div
-                    className={`pointer-events-none absolute inset-x-4 bottom-4 rounded-xl bg-ink px-4 py-3 text-canvas shadow-lift transition-all duration-300 ${
-                      isActive ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"
-                    }`}
-                  >
-                    <div className="flex items-center justify-between gap-3">
-                      <span className="text-xs font-semibold">클릭해서 옵션 보기</span>
-                      <span className="grid size-6 place-items-center rounded-full bg-canvas/15 text-xs">→</span>
+                  {!p.disabled && (
+                    <div
+                      className={`pointer-events-none absolute inset-x-4 bottom-4 rounded-xl bg-ink px-4 py-3 text-canvas shadow-lift transition-all duration-300 ${
+                        isActive ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"
+                      }`}
+                    >
+                      <div className="flex items-center justify-between gap-3">
+                        <span className="text-xs font-semibold">클릭해서 옵션 보기</span>
+                        <span className="grid size-6 place-items-center rounded-full bg-canvas/15 text-xs">→</span>
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </button>
               );
             })}
@@ -182,22 +194,16 @@ export function InteractiveProductDesk() {
                   <Button variant="outline" onClick={() => setOpenId(null)}>
                     닫기
                   </Button>
-                  {["namecard", "flyer", "card"].includes(opened.id) ? (
+                  {opened.route ? (
                     <Button
                       onClick={() => {
                         setOpenId(null);
-                        if (opened.id === "namecard") navigate({ to: "/order/namecard" });
-                        else if (opened.id === "flyer") navigate({ to: "/order/flyer" });
-                        else if (opened.id === "card") navigate({ to: "/order/postcard" });
+                        navigate({ to: opened.route as string });
                       }}
                     >
                       {opened.cta} →
                     </Button>
-                  ) : (
-                    <Button asChild>
-                      <a href="#quote">{opened.cta} →</a>
-                    </Button>
-                  )}
+                  ) : null}
                 </DialogFooter>
               </div>
             </>
